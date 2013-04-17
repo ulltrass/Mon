@@ -50,7 +50,7 @@ public class HealthCheckService {
                 eventLog = null;
             }
         }
-//        notifyEvents(eventLogs);
+        notifyEvents(eventLogs);
     }
 
     private EventLog checkCpuUsage(Server server) {
