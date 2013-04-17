@@ -61,7 +61,6 @@ public class EventLog {
     public void setNotificationType(NotificationType notificationType) {
         this.notificationType = notificationType;
     }
-    
-    
+
     
 }

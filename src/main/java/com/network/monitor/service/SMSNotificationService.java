@@ -32,14 +32,14 @@ import java.util.logging.Logger;
  */
 public class SMSNotificationService {
 
-    public void sendSMSToContacts(Setting setting, List<Contact> contacts) {
+    public void sendSMSToContacts(Setting setting, List<Contact> contacts,String message) {
 
         for (Contact contact : contacts) {
             if (contact.getSmsNumber().startsWith("9")) {
-                sendSMS(setting.getSmsUrlWebStar(), contact.getSmsNumber(), "Testing", "JavaApp");
+                sendSMS(setting.getSmsUrlWebStar(), contact.getSmsNumber(), message, "JavaApp");
             } else {
                 if (contact.getSmsNumber().startsWith("8")) {
-                    sendSingTelSMS(setting.getSmsUrlSingTel(), contact.getSmsNumber(), "Testing");
+                    sendSingTelSMS(setting.getSmsUrlSingTel(), contact.getSmsNumber(), message);
                 }
             }
         }

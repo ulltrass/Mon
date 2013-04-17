@@ -42,18 +42,16 @@ public class ContactController {
         return contactService.getContactsWithEmailAddressSet();
     }
 
-    public void sendSmsToContacts(Setting setting, List<Contact> contacts) {
-        List<Server> servers = diskMonitorService.getDiskUsageForAllServers();
-        smsNotificationService.sendSMSToContacts(setting, contacts);
+    public void sendSmsToContacts(Setting setting, List<Contact> contacts, String message) {
+        smsNotificationService.sendSMSToContacts(setting, contacts, message);
     }
 
-    public void sendEmailToContacts(List<EmailSettings> emailSettings, List<Contact> contacts) {
+    public void sendEmailToContacts(List<EmailSettings> emailSettings, List<Contact> contacts,
+            String subject, String message) {
         List<Server> servers = diskMonitorService.getDiskUsageForAllServers();
         boolean success = false;
         for (EmailSettings emailSetting : emailSettings) {
             if (emailSetting.isDefaultEmail()) {
-                String subject = "Test Subject";
-                String message = "Test alert message";
                 try {
                     emailNotificationService.sendEmail(emailSetting.getServerHost(),
                             emailSetting.getServerPort(), emailSetting.getUserName(),
@@ -70,8 +68,6 @@ public class ContactController {
         if (!success) {
             for (EmailSettings emailSetting : emailSettings) {
                 if (!success) {
-                    String subject = "Test Subject";
-                    String message = "Test alert message";
                     try {
                         emailNotificationService.sendEmail(emailSetting.getServerHost(),
                                 emailSetting.getServerPort(), emailSetting.getUserName(),

@@ -25,10 +25,12 @@ class MonitoringInfoServer implements Runnable {
 
     ServerSocket socket;
     MainForm mainForm;
+    HealthCheckService healthCheckService;
 
     public MonitoringInfoServer(ServerSocket ds, MainForm mainForm) {
         socket = ds;
         this.mainForm = mainForm;
+        healthCheckService = new HealthCheckService(mainForm);
 
     }
 
@@ -43,10 +45,7 @@ class MonitoringInfoServer implements Runnable {
                 Socket s = socket.accept();
                 InputStream is = s.getInputStream();
                 ObjectInputStream ois = new ObjectInputStream(is);
-                Server server = (Server) ois.readObject();
-
-                is.close();
-                s.close();
+                Server server = (Server) ois.readObject();;
 
                 System.out.println("Server: " + server.getServerInfo().getGeneralInfo().getComputerName());
 
@@ -70,6 +69,10 @@ class MonitoringInfoServer implements Runnable {
                     }
                 }
 
+                is.close();
+                s.close();
+                
+                healthCheckService.checkServer(server);
 
             } catch (IOException ex) {
                 ex.printStackTrace();

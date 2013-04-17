@@ -53,6 +53,7 @@ public class MainForm extends javax.swing.JFrame {
         initComponents();
         initServersList();
         loadContactTableInfo();
+        loadEventTableInfo();
         loadSettings();
     }
 
@@ -330,17 +331,14 @@ public class MainForm extends javax.swing.JFrame {
 
         eventsTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+
             },
             new String [] {
                 "Time", "Server", "Message", "Type", "Notification"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.Object.class
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
@@ -846,7 +844,7 @@ public class MainForm extends javax.swing.JFrame {
 
         Setting setting = settingsController.getSettings();
         List<Contact> contacts = contactController.getContactsWithSMSNumberSet();
-        contactController.sendSmsToContacts(setting, contacts);
+        contactController.sendSmsToContacts(setting, contacts, "Test message");
 
     }//GEN-LAST:event_smsButtonActionPerformed
 
@@ -877,7 +875,7 @@ public class MainForm extends javax.swing.JFrame {
                     "Email error",
                     JOptionPane.ERROR_MESSAGE);
         } else {
-            contactController.sendEmailToContacts(emailSettingses, contacts);
+            contactController.sendEmailToContacts(emailSettingses, contacts, "Test", "Test Message");
         }
 
     }//GEN-LAST:event_emailButtonActionPerformed
@@ -1189,6 +1187,29 @@ public class MainForm extends javax.swing.JFrame {
             tableModel.addRow(new Object[]{null, null, null});
         }
 
+    }
+    
+    private void loadEventTableInfo() {
+        //add event log
+        DefaultTableModel tableModel = (DefaultTableModel) eventsTable.getModel();
+
+//        for (Contact contact : contacts) {
+//            tableModel.addRow(
+//                    new Object[]{contact.getName(), contact.getEmail(), contact.getSmsNumber()});
+//        }
+//
+//        for (int i = contacts.size() - 1; i < 10; i++) {
+//            tableModel.addRow(new Object[]{null, null, null});
+//        }
+
+    }
+    
+    public void addEvent(String time, String server, String message, String type, String notification){
+         DefaultTableModel tableModel = (DefaultTableModel) eventsTable.getModel();
+         
+         tableModel.addRow(
+                    new Object[]{time, server, message, type, notification});
+        
     }
 
     private void loadSettings() {
