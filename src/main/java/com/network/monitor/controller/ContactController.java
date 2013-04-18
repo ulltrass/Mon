@@ -13,7 +13,7 @@ import com.network.monitor.service.DiskMonitorService;
 import com.network.monitor.service.EmailNotificationService;
 import com.network.monitor.service.SMSNotificationService;
 import java.util.List;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -21,6 +21,7 @@ import java.util.logging.Logger;
  */
 public class ContactController {
 
+    private static final Logger LOGGER = Logger.getLogger(ContactController.class);
     ContactService contactService = new ContactService();
     SMSNotificationService smsNotificationService = new SMSNotificationService();
     EmailNotificationService emailNotificationService = new EmailNotificationService();
@@ -59,7 +60,8 @@ public class ContactController {
                     success = true;
                     break;
                 } catch (Exception e) {
-                    System.out.println("Error sending email");
+                    LOGGER.error("Error sending mail");
+                    LOGGER.error(e.getMessage(), e);
                     success = false;
                 }
             }
@@ -75,7 +77,8 @@ public class ContactController {
                         success = true;
                         break;
                     } catch (Exception e) {
-                        System.out.println("Error sending email");
+                        LOGGER.error("Error sending mail");
+                        LOGGER.error(e.getMessage(), e);
                         success = false;
                     }
                 }

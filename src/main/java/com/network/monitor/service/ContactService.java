@@ -57,7 +57,7 @@ public class ContactService {
 
         for (String contact : contactsAsCSV) {
             String[] contactDetails = contact.split(",");
-            if (contactDetails[2] != null && !"".equals(contactDetails[2]))
+            if (contactDetails[2] != null && !"".equals(contactDetails[2].trim()))
             contacts.add(new Contact(contactDetails[0].trim(), contactDetails[1].trim(),
                     contactDetails[2].trim()));
         }
@@ -70,7 +70,7 @@ public class ContactService {
 
         for (String contact : contactsAsCSV) {
             String[] contactDetails = contact.split(",");
-            if (contactDetails[1] != null && !"".equals(contactDetails[1]))
+            if (contactDetails[1] != null && !"".equals(contactDetails[1].trim()))
             contacts.add(new Contact(contactDetails[0].trim(), contactDetails[1].trim(),
                     contactDetails[2].trim()));
         }

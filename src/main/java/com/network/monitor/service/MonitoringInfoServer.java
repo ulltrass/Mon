@@ -16,6 +16,7 @@ import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.List;
+import org.apache.log4j.Logger;
 
 /**
  *
@@ -26,6 +27,7 @@ class MonitoringInfoServer implements Runnable {
     ServerSocket socket;
     MainForm mainForm;
     HealthCheckService healthCheckService;
+    private static final Logger LOGGER = Logger.getLogger(MonitoringInfoServer.class);
 
     public MonitoringInfoServer(ServerSocket ds, MainForm mainForm) {
         socket = ds;
@@ -37,17 +39,17 @@ class MonitoringInfoServer implements Runnable {
     @Override
     public void run() {
 
+        LOGGER.info("MonitoringInfoServer started...");
 
         while (true) {
             try {
-                System.out.println("InfoServer astept conexiuni...");
 
                 Socket s = socket.accept();
                 InputStream is = s.getInputStream();
                 ObjectInputStream ois = new ObjectInputStream(is);
                 Server server = (Server) ois.readObject();;
 
-                System.out.println("Server: " + server.getServerInfo().getGeneralInfo().getComputerName());
+                LOGGER.info("Received info from Server: " + server.getServerInfo().getGeneralInfo().getComputerName());
 
                 List<Server> servers = mainForm.getServersList();
                 if (servers.isEmpty()) {
@@ -71,7 +73,7 @@ class MonitoringInfoServer implements Runnable {
 
                 is.close();
                 s.close();
-                
+
                 healthCheckService.checkServer(server);
 
             } catch (IOException ex) {

@@ -8,9 +8,11 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.ServerSocket;
+import org.apache.log4j.Logger;
 
 public class RegisterServer implements Runnable {
 
+    private static final Logger LOGGER = Logger.getLogger(RegisterServer.class);
     private DatagramSocket socket;
     private int infoPort;
 
@@ -23,9 +25,9 @@ public class RegisterServer implements Runnable {
     @Override
     public void run() {
 
-
+        LOGGER.info("Register server started...");
         while (true) {
-            System.out.println("RegisterServer astept conexiuni...");
+            
             byte[] buffer = new byte[1024];
             byte[] bufferOut = new byte[1024];
             String remoteIp = "";
@@ -35,11 +37,10 @@ public class RegisterServer implements Runnable {
                 socket.receive(packet);
                 remoteIp = packet.getAddress().toString().split("/")[1];
             } catch (IOException e) {
-                System.out.println("RegisterSerger: Error receiving datagram packet");
-                e.printStackTrace();
+                LOGGER.error(e.getMessage(), e);
             }
             InetAddress client = packet.getAddress();
-            System.out.println("Register Server Am primit pachet de la: " + client.toString() + "pe portul" + packet.getPort());
+            LOGGER.info("Register Server Received package from: " + client.toString() + " on port: " + packet.getPort());
             int client_port = packet.getPort();
 
             String message = new String(buffer).trim();
@@ -50,14 +51,14 @@ public class RegisterServer implements Runnable {
                 message = "RegisteredOK;" + infoPort + ";";
                 bufferOut = message.getBytes();
                 packet = new DatagramPacket(bufferOut, bufferOut.length, client, client_port);
-                System.out.println("Send Hub confirmation to  " + message + " -- " + client + "pe portul " + client_port + "\n");
+                LOGGER.info("Send Hub confirmation to  " + message + " -- " + client + " using port " + client_port + "\n");
 
                 try {
                     socket.send(packet);
 
                 } catch (IOException e) {
-                    System.out.println("ERROR SENDIG CONFIRMATION PACKAGE TO " + client);
-                    e.printStackTrace();
+                    LOGGER.error("ERROR SENDIG CONFIRMATION PACKAGE TO " + client);
+                    LOGGER.error(e.getMessage(), e);
                 }
 
                 if (u.startsWith("RegisterMe")) {
