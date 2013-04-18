@@ -824,6 +824,7 @@ public class MainForm extends javax.swing.JFrame {
                 Contact contact = new Contact(contactName, contactEmail, contactSMS);
                 contacts.add(contact);
             }
+            checkDuplicates(contacts);
 
         }
         contactController.saveContacts(contacts);
@@ -1188,7 +1189,7 @@ public class MainForm extends javax.swing.JFrame {
         }
 
     }
-    
+
     private void loadEventTableInfo() {
         //add event log
         DefaultTableModel tableModel = (DefaultTableModel) eventsTable.getModel();
@@ -1203,13 +1204,13 @@ public class MainForm extends javax.swing.JFrame {
 //        }
 
     }
-    
-    public void addEvent(String time, String server, String message, String type, String notification){
-         DefaultTableModel tableModel = (DefaultTableModel) eventsTable.getModel();
-         
-         tableModel.addRow(
-                    new Object[]{time, server, message, type, notification});
-        
+
+    public void addEvent(String time, String server, String message, String type, String notification) {
+        DefaultTableModel tableModel = (DefaultTableModel) eventsTable.getModel();
+
+        tableModel.addRow(
+                new Object[]{time, server, message, type, notification});
+
     }
 
     private void loadSettings() {
@@ -1373,6 +1374,20 @@ public class MainForm extends javax.swing.JFrame {
         emailSettingsListModel.clear();
         for (EmailSettings emailSetting : setting.getEmailSettings()) {
             emailSettingsListModel.addElement(emailSetting.getConfigName());
+        }
+    }
+
+    private void checkDuplicates(List<Contact> contacts) {
+        for (int i = 0; i < contacts.size(); i++) {
+            for (int j = i + 1; j < contacts.size(); j++) {
+                Contact firstContact = contacts.get(i);
+                Contact secondContact = contacts.get(j);
+                if (firstContact.getEmail().trim().equals(secondContact.getEmail().trim())) {
+                    DefaultTableModel tableModel = (DefaultTableModel) contactsTable.getModel();
+                    
+                }
+
+            }
         }
     }
 }
