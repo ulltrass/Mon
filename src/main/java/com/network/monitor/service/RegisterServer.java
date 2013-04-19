@@ -67,15 +67,8 @@ public class RegisterServer implements Runnable {
                     GeneralInfo generalInfo = new GeneralInfo();
 
                     generalInfo.setIpv4Address(client.getHostAddress());
-
                 }
-                
             }
-            
-            
-
-
         }
-
     }
 }

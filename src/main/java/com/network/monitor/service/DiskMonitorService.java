@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.network.monitor.service;
 
 import com.network.monitor.domain.DiskUsage;
@@ -21,7 +17,7 @@ import java.util.Set;
 
 /**
  *
- * @author Ovi
+ * @author
  */
 public class DiskMonitorService {
 

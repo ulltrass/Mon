@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.network.monitor.controller;
 
 import com.network.monitor.domain.EmailSettings;
@@ -10,7 +6,7 @@ import com.network.monitor.service.AppSettingsService;
 
 /**
  *
- * @author opetridean
+ * @author 
  */
 public class SettingsController {
 

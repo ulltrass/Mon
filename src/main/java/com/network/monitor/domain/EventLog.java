@@ -1,14 +1,10 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.network.monitor.domain;
 
 import java.sql.Timestamp;
 
 /**
  *
- * @author opetridean
+ * @author
  */
 public class EventLog {
 
@@ -20,8 +16,6 @@ public class EventLog {
     
     EventType eventType;
     
-    NotificationType notificationType;
-
     public Timestamp getEventTime() {
         return eventTime;
     }
@@ -54,13 +48,5 @@ public class EventLog {
         this.eventType = eventType;
     }
 
-    public NotificationType getNotificationType() {
-        return notificationType;
-    }
-
-    public void setNotificationType(NotificationType notificationType) {
-        this.notificationType = notificationType;
-    }
-
-    
+   
 }

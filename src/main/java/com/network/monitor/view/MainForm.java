@@ -32,7 +32,7 @@ import javax.swing.table.TableModel;
 
 /**
  *
- * @author opetridean
+ * @author
  */
 public class MainForm extends javax.swing.JFrame {
 

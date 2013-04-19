@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.network.monitor.service;
 
 import com.network.monitor.domain.Server;
@@ -20,7 +16,7 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Ovi
+ * @author
  */
 class MonitoringInfoServer implements Runnable {
 

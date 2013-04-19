@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.network.monitor.service;
 
 import com.network.monitor.controller.NotificationController;
@@ -16,7 +12,7 @@ import java.util.List;
 
 /**
  *
- * @author Ovi
+ * @author
  */
 public class HealthCheckService {
 
