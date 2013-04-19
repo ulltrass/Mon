@@ -50,7 +50,7 @@ public class AppSettingsService {
         linesToSave.add(SMS_SINGTEL_SENDER_NAME + setting.getSmsTestSingTelSenderName());
         linesToSave.add(SMS_SINGTEL_PHONE_NUMBER + setting.getSmsTestSingTelPhoneNumber());
         linesToSave.add(SMS_SINGTEL_TEXT + setting.getSmsTestSingTelTestMessage());
-        
+
         linesToSave.add(MONITORING_TYPE + setting.getMonitoringType());
 
         FileUtil.saveContentToFile(SETTINGS_PATH, SETTINGS_FILE, linesToSave);
@@ -83,10 +83,10 @@ public class AppSettingsService {
         linesToSave.add(EMAIL_DEFAULT + emailSettings.isDefaultEmail());
         linesToSave.add(EMAIL_PRIORITY + emailSettings.getPriorityId());
 
-        FileUtil.saveContentToFile(SETTINGS_PATH, emailSettings.getPriorityId() + "-" +
-                emailSettings.getConfigName() + EMAIL_SETTINGS_FILE, linesToSave);
+        FileUtil.saveContentToFile(SETTINGS_PATH, emailSettings.getPriorityId() + "-"
+                + emailSettings.getConfigName() + EMAIL_SETTINGS_FILE, linesToSave);
     }
-    
+
     public void updateEmailSettings(EmailSettings emailSettings, String oldConfigName) {
         List<String> linesToSave = new ArrayList<String>();
 
@@ -98,20 +98,25 @@ public class AppSettingsService {
         linesToSave.add(EMAIL_ENABLED + emailSettings.isEnabled());
         linesToSave.add(EMAIL_DEFAULT + emailSettings.isDefaultEmail());
         linesToSave.add(EMAIL_PRIORITY + emailSettings.getPriorityId());
+
         FileUtil.deleteConfigFile(SETTINGS_PATH, oldConfigName + EMAIL_SETTINGS_FILE);
 
-        FileUtil.saveContentToFile(SETTINGS_PATH, emailSettings.getPriorityId() 
+        FileUtil.saveContentToFile(SETTINGS_PATH, emailSettings.getPriorityId()
                 + "-" + emailSettings.getConfigName() + EMAIL_SETTINGS_FILE, linesToSave);
     }
-    
-    public void updateEmailPriority(EmailSettings emailSettings, Integer oldPriority) {
-        List<File> fileList = FileUtil.getFilesFromPathThatStartWith(SETTINGS_PATH, EMAIL_SETTINGS_FILE);
-        
-        
-//        FileUtil.deleteConfigFile(SETTINGS_PATH, oldConfigName + EMAIL_SETTINGS_FILE);
 
-//        FileUtil.saveContentToFile(SETTINGS_PATH, emailSettings.getPriorityId() 
-//                + "-" + emailSettings.getConfigName() + EMAIL_SETTINGS_FILE, linesToSave);
+    public void updateEmailPriority(EmailSettings emailSettings, EmailSettings emailSettings1, Integer newPriority, Integer newExchangePriority) {
+        List<File> fileList = FileUtil.getFilesFromPathThatStartWith(SETTINGS_PATH, EMAIL_SETTINGS_FILE);
+
+//        String currentPath = emailSettings.getPriorityId() + "-" + emailSettings.getConfigName();
+        String currentPathRenamed = newPriority + "-" + emailSettings.getConfigName();
+//        String exchangePath = emailSettings1.getPriorityId() + "-" + emailSettings1.getConfigName();
+        String exchangePathRenamed = newExchangePriority + "-" + emailSettings1.getConfigName();
+
+//        FileUtil.updateNameForConfigFile(SETTINGS_PATH, currentPath, exchangePathRenamed);
+        updateEmailSettings(emailSettings, currentPathRenamed);
+        updateEmailSettings(emailSettings1, exchangePathRenamed);
+
     }
 
     public void deleteEmailSettings(String configName) {
@@ -141,7 +146,7 @@ public class AppSettingsService {
             if (line.startsWith(SMS_URL_SINGTEL) && line.split("=").length == 2) {
                 setting.setSmsUrlSingTel(line.split("=")[1]);
             }
-             if (line.startsWith(SMS_SINGTEL_SENDER_NAME) && line.split("=").length == 2) {
+            if (line.startsWith(SMS_SINGTEL_SENDER_NAME) && line.split("=").length == 2) {
                 setting.setSmsTestSingTelSenderName(line.split("=")[1]);
             }
             if (line.startsWith(SMS_SINGTEL_PHONE_NUMBER) && line.split("=").length == 2) {
@@ -175,7 +180,7 @@ public class AppSettingsService {
                 if (line.startsWith(EMAIL_PASSWORD)) {
                     emailSetting.setPassword(line.split("=")[1]);
                 }
-                 if (line.startsWith(EMAIL_PRIORITY)) {
+                if (line.startsWith(EMAIL_PRIORITY)) {
                     emailSetting.setPriorityId(Integer.parseInt(line.split("=")[1]));
                 }
             }

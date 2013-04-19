@@ -216,7 +216,7 @@ public class MainForm extends javax.swing.JFrame {
 
         cpuTextField.setEditable(false);
 
-        jLabel17.setText("RAM Capacity (MB))");
+        jLabel17.setText("RAM Capacity (MB)");
 
         ramTextField.setEditable(false);
 
@@ -267,7 +267,7 @@ public class MainForm extends javax.swing.JFrame {
                             .addComponent(jLabel20))
                         .addGap(22, 22, 22)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cpuTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 335, Short.MAX_VALUE)
+                            .addComponent(cpuTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
                             .addComponent(ramTextField)
                             .addComponent(dvdTextField)
                             .addComponent(compModelTextField)
@@ -1039,13 +1039,37 @@ public class MainForm extends javax.swing.JFrame {
         int selectedIndex = emailSettingList.getSelectedIndex();
         if (selectedIndex > 0) {
             EmailSettings emailSettings = setting.getEmailSettings().get(selectedIndex);
-            settingsController.updateEmailSetting(emailSettings, null);
+            emailSettings.setPriorityId(selectedIndex - 1);
+            EmailSettings emailSettingsPrev = setting.getEmailSettings().get(selectedIndex - 1);
+            emailSettingsPrev.setPriorityId(selectedIndex);
+            settingsController.updateEmailPriority(emailSettings, emailSettingsPrev, selectedIndex, selectedIndex - 1);
+            setting = settingsController.getSettings();
+            emailSettingsListModel.clear();
+            for (EmailSettings emailSettingsElement : setting.getEmailSettings()) {
+                emailSettingsListModel.addElement(emailSettingsElement.getConfigName());
+            }
             emailSettingList.setSelectedIndex(selectedIndex - 1);
         }
 
     }//GEN-LAST:event_moveUpButtonActionPerformed
 
     private void moveDownButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moveDownButtonActionPerformed
+        int selectedIndex = emailSettingList.getSelectedIndex();
+        if (selectedIndex < emailSettingsListModel.getSize() - 1) {
+            EmailSettings emailSettings = setting.getEmailSettings().get(selectedIndex);
+            emailSettings.setPriorityId(selectedIndex + 1);
+            EmailSettings emailSettingsPrev = setting.getEmailSettings().get(selectedIndex + 1);
+            emailSettingsPrev.setPriorityId(selectedIndex);
+            settingsController.updateEmailPriority(emailSettings, emailSettingsPrev, selectedIndex, selectedIndex + 1);
+            setting = settingsController.getSettings();
+            emailSettingsListModel.clear();
+            for (EmailSettings emailSettingsElement : setting.getEmailSettings()) {
+                emailSettingsListModel.addElement(emailSettingsElement.getConfigName());
+            }
+            emailSettingList.setSelectedIndex(selectedIndex + 1);
+        }
+
+
     }//GEN-LAST:event_moveDownButtonActionPerformed
 //
 //    /**
@@ -1384,7 +1408,7 @@ public class MainForm extends javax.swing.JFrame {
                 Contact secondContact = contacts.get(j);
                 if (firstContact.getEmail().trim().equals(secondContact.getEmail().trim())) {
                     DefaultTableModel tableModel = (DefaultTableModel) contactsTable.getModel();
-                    
+
                 }
 
             }

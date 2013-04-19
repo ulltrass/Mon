@@ -1,0 +1,106 @@
+18-04-2013 10:30:48,515 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Register server started...
+18-04-2013 10:30:48,516 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - MonitoringInfoServer started...
+18-04-2013 10:31:05,903 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Register Server Received package from: /10.111.16.200 on port: 49796
+18-04-2013 10:31:05,903 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Send Hub confirmation to  RegisteredOK;4446; -- /10.111.16.200 using port 49796
+
+18-04-2013 10:31:08,013 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - Received info from Server: CLUJOPETRIDEA02
+18-04-2013 10:31:11,256 ERROR Thread-5 [com.network.monitor.controller.ContactController]  - Error sending mail
+18-04-2013 10:31:11,257 ERROR Thread-5 [com.network.monitor.controller.ContactController]  - javax.mail.SendFailedException: Invalid Addresses;
+  nested exception is:
+	com.sun.mail.smtp.SMTPAddressFailedException: 553-5.1.2 We weren't able to find the recipient domain. Please check for any
+553-5.1.2 spelling errors, and make sure you didn't enter any spaces, periods,
+553 5.1.2 or other punctuation after the recipient's email address. n2sm29653534wiy.6 - gsmtp
+
+java.lang.RuntimeException: javax.mail.SendFailedException: Invalid Addresses;
+  nested exception is:
+	com.sun.mail.smtp.SMTPAddressFailedException: 553-5.1.2 We weren't able to find the recipient domain. Please check for any
+553-5.1.2 spelling errors, and make sure you didn't enter any spaces, periods,
+553 5.1.2 or other punctuation after the recipient's email address. n2sm29653534wiy.6 - gsmtp
+
+	at com.network.monitor.service.EmailNotificationService.sendEmail(EmailNotificationService.java:61)
+	at com.network.monitor.controller.ContactController.sendEmailToContacts(ContactController.java:74)
+	at com.network.monitor.controller.NotificationController.notifyContacts(NotificationController.java:40)
+	at com.network.monitor.service.HealthCheckService.notifyEvents(HealthCheckService.java:129)
+	at com.network.monitor.service.HealthCheckService.checkServer(HealthCheckService.java:53)
+	at com.network.monitor.service.MonitoringInfoServer.run(MonitoringInfoServer.java:77)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: javax.mail.SendFailedException: Invalid Addresses;
+  nested exception is:
+	com.sun.mail.smtp.SMTPAddressFailedException: 553-5.1.2 We weren't able to find the recipient domain. Please check for any
+553-5.1.2 spelling errors, and make sure you didn't enter any spaces, periods,
+553 5.1.2 or other punctuation after the recipient's email address. n2sm29653534wiy.6 - gsmtp
+
+	at com.sun.mail.smtp.SMTPTransport.rcptTo(SMTPTransport.java:1862)
+	at com.sun.mail.smtp.SMTPTransport.sendMessage(SMTPTransport.java:1118)
+	at javax.mail.Transport.send0(Transport.java:195)
+	at javax.mail.Transport.send(Transport.java:124)
+	at com.network.monitor.service.EmailNotificationService.sendEmail(EmailNotificationService.java:58)
+	... 6 more
+Caused by: com.sun.mail.smtp.SMTPAddressFailedException: 553-5.1.2 We weren't able to find the recipient domain. Please check for any
+553-5.1.2 spelling errors, and make sure you didn't enter any spaces, periods,
+553 5.1.2 or other punctuation after the recipient's email address. n2sm29653534wiy.6 - gsmtp
+
+	at com.sun.mail.smtp.SMTPTransport.rcptTo(SMTPTransport.java:1715)
+	... 10 more
+18-04-2013 10:31:12,546 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - Received info from Server: CLUJOPETRIDEA02
+18-04-2013 10:31:15,577 ERROR Thread-5 [com.network.monitor.controller.ContactController]  - Error sending mail
+18-04-2013 10:31:15,577 ERROR Thread-5 [com.network.monitor.controller.ContactController]  - javax.mail.SendFailedException: Invalid Addresses;
+  nested exception is:
+	com.sun.mail.smtp.SMTPAddressFailedException: 553-5.1.2 We weren't able to find the recipient domain. Please check for any
+553-5.1.2 spelling errors, and make sure you didn't enter any spaces, periods,
+553 5.1.2 or other punctuation after the recipient's email address. q18sm22912843wiw.8 - gsmtp
+
+java.lang.RuntimeException: javax.mail.SendFailedException: Invalid Addresses;
+  nested exception is:
+	com.sun.mail.smtp.SMTPAddressFailedException: 553-5.1.2 We weren't able to find the recipient domain. Please check for any
+553-5.1.2 spelling errors, and make sure you didn't enter any spaces, periods,
+553 5.1.2 or other punctuation after the recipient's email address. q18sm22912843wiw.8 - gsmtp
+
+	at com.network.monitor.service.EmailNotificationService.sendEmail(EmailNotificationService.java:61)
+	at com.network.monitor.controller.ContactController.sendEmailToContacts(ContactController.java:74)
+	at com.network.monitor.controller.NotificationController.notifyContacts(NotificationController.java:40)
+	at com.network.monitor.service.HealthCheckService.notifyEvents(HealthCheckService.java:129)
+	at com.network.monitor.service.HealthCheckService.checkServer(HealthCheckService.java:53)
+	at com.network.monitor.service.MonitoringInfoServer.run(MonitoringInfoServer.java:77)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: javax.mail.SendFailedException: Invalid Addresses;
+  nested exception is:
+	com.sun.mail.smtp.SMTPAddressFailedException: 553-5.1.2 We weren't able to find the recipient domain. Please check for any
+553-5.1.2 spelling errors, and make sure you didn't enter any spaces, periods,
+553 5.1.2 or other punctuation after the recipient's email address. q18sm22912843wiw.8 - gsmtp
+
+	at com.sun.mail.smtp.SMTPTransport.rcptTo(SMTPTransport.java:1862)
+	at com.sun.mail.smtp.SMTPTransport.sendMessage(SMTPTransport.java:1118)
+	at javax.mail.Transport.send0(Transport.java:195)
+	at javax.mail.Transport.send(Transport.java:124)
+	at com.network.monitor.service.EmailNotificationService.sendEmail(EmailNotificationService.java:58)
+	... 6 more
+Caused by: com.sun.mail.smtp.SMTPAddressFailedException: 553-5.1.2 We weren't able to find the recipient domain. Please check for any
+553-5.1.2 spelling errors, and make sure you didn't enter any spaces, periods,
+553 5.1.2 or other punctuation after the recipient's email address. q18sm22912843wiw.8 - gsmtp
+
+	at com.sun.mail.smtp.SMTPTransport.rcptTo(SMTPTransport.java:1715)
+	... 10 more
+18-04-2013 10:34:05,663 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Register server started...
+18-04-2013 10:34:05,745 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - MonitoringInfoServer started...
+18-04-2013 10:34:14,082 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Register Server Received package from: /10.111.16.200 on port: 55058
+18-04-2013 10:34:14,083 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Send Hub confirmation to  RegisteredOK;4446; -- /10.111.16.200 using port 55058
+
+18-04-2013 10:34:16,212 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - Received info from Server: CLUJOPETRIDEA02
+18-04-2013 10:36:09,226 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - Received info from Server: CLUJOPETRIDEA02
+18-04-2013 10:36:19,152 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - Received info from Server: CLUJOPETRIDEA02
+18-04-2013 15:14:11,765 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Register server started...
+18-04-2013 15:14:11,767 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - MonitoringInfoServer started...
+18-04-2013 15:14:16,970 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Register Server Received package from: /10.111.16.200 on port: 62968
+18-04-2013 15:14:16,971 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Send Hub confirmation to  RegisteredOK;4446; -- /10.111.16.200 using port 62968
+
+18-04-2013 15:14:19,356 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - Received info from Server: CLUJOPETRIDEA02
+18-04-2013 15:14:24,451 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - Received info from Server: CLUJOPETRIDEA02
+18-04-2013 15:15:52,580 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Register server started...
+18-04-2013 15:15:52,580 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - MonitoringInfoServer started...
+18-04-2013 15:15:55,847 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Register Server Received package from: /10.111.16.200 on port: 57690
+18-04-2013 15:15:55,847 INFO  Thread-4 [com.network.monitor.service.RegisterServer]  - Send Hub confirmation to  RegisteredOK;4446; -- /10.111.16.200 using port 57690
+
+18-04-2013 15:15:58,199 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - Received info from Server: CLUJOPETRIDEA02
+18-04-2013 15:16:04,024 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - Received info from Server: CLUJOPETRIDEA02
+18-04-2013 15:16:08,008 INFO  Thread-5 [com.network.monitor.service.MonitoringInfoServer]  - Received info from Server: CLUJOPETRIDEA02

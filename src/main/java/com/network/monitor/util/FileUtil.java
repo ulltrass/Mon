@@ -183,4 +183,10 @@ public class FileUtil {
         File propertiesFile = new File(path + "/" + fileName);
         propertiesFile.delete();
     }
+     
+     public static void updateNameForConfigFile(String path, String fileName, String newFileName) {
+        File propertiesFile = new File(path + "/" + fileName);
+        File newFile = new File(path + "/" + newFileName);
+        propertiesFile.renameTo(newFile);
+    }
 }

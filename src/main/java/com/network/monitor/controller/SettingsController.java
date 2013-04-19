@@ -28,8 +28,8 @@ public class SettingsController {
         appSettingsService.updateEmailSettings(setting, oldConfigName);
     }
     
-    public void updateEmailPriority(EmailSettings setting, Integer oldPriority) {
-        appSettingsService.updateEmailPriority(setting, oldPriority);
+    public void updateEmailPriority(EmailSettings setting, EmailSettings emailSettings1, Integer newPriority, Integer newExchangePriority) {
+        appSettingsService.updateEmailPriority(setting, emailSettings1, newPriority, newExchangePriority);
     }
 
     public Setting getSettings() {
