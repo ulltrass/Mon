@@ -209,5 +209,3 @@ Set objNetwork = Nothing
 WriteStuff.WriteLine(tmp)
 
 WriteStuff.Close
-
-Wscript.Echo "Done!"

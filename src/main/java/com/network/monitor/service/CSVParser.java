@@ -31,8 +31,7 @@ public class CSVParser {
                     Map<String, String> property = null;
 
                     if (line.split(",").length != 2) {
-                        Logger.getLogger(CSVParser.class.getName()).log(Level.WARNING, "Invalid log line <"
-                                + line + ">");
+                       
                     } else {
                         property = new HashMap<String, String>();
                         property.put(line.split(",")[0].trim(), line.split(",")[1].trim());

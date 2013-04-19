@@ -997,8 +997,8 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
-                                  <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+                                  <Component id="javaMonitoringRadioButton" min="-2" max="-2" attributes="0"/>
+                                  <Component id="vbMonitoringRadioButton" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace pref="715" max="32767" attributes="0"/>
@@ -1011,9 +1011,9 @@
                               <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                              <Component id="jRadioButton1" min="-2" max="-2" attributes="0"/>
+                              <Component id="vbMonitoringRadioButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="jRadioButton2" min="-2" max="-2" attributes="0"/>
+                              <Component id="javaMonitoringRadioButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace pref="377" max="32767" attributes="0"/>
                           </Group>
                       </Group>
@@ -1025,7 +1025,7 @@
                         <Property name="text" type="java.lang.String" value="Monitoring Type"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="jRadioButton1">
+                    <Component class="javax.swing.JRadioButton" name="vbMonitoringRadioButton">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup2"/>
@@ -1033,11 +1033,12 @@
                         <Property name="label" type="java.lang.String" value="VB Scripts"/>
                       </Properties>
                     </Component>
-                    <Component class="javax.swing.JRadioButton" name="jRadioButton2">
+                    <Component class="javax.swing.JRadioButton" name="javaMonitoringRadioButton">
                       <Properties>
                         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                           <ComponentRef name="buttonGroup2"/>
                         </Property>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="label" type="java.lang.String" value="Java Library"/>
                       </Properties>
                     </Component>

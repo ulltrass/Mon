@@ -154,8 +154,8 @@ public class MainForm extends javax.swing.JFrame {
         moveDownButton = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        vbMonitoringRadioButton = new javax.swing.JRadioButton();
+        javaMonitoringRadioButton = new javax.swing.JRadioButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -742,11 +742,12 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel2.setText("Monitoring Type");
 
-        buttonGroup2.add(jRadioButton1);
-        jRadioButton1.setLabel("VB Scripts");
+        buttonGroup2.add(vbMonitoringRadioButton);
+        vbMonitoringRadioButton.setLabel("VB Scripts");
 
-        buttonGroup2.add(jRadioButton2);
-        jRadioButton2.setLabel("Java Library");
+        buttonGroup2.add(javaMonitoringRadioButton);
+        javaMonitoringRadioButton.setSelected(true);
+        javaMonitoringRadioButton.setLabel("Java Library");
 
         javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
         jPanel7.setLayout(jPanel7Layout);
@@ -755,8 +756,8 @@ public class MainForm extends javax.swing.JFrame {
             .addGroup(jPanel7Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton2)
-                    .addComponent(jRadioButton1)
+                    .addComponent(javaMonitoringRadioButton)
+                    .addComponent(vbMonitoringRadioButton)
                     .addComponent(jLabel2))
                 .addContainerGap(715, Short.MAX_VALUE))
         );
@@ -766,9 +767,9 @@ public class MainForm extends javax.swing.JFrame {
                 .addGap(22, 22, 22)
                 .addComponent(jLabel2)
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton1)
+                .addComponent(vbMonitoringRadioButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton2)
+                .addComponent(javaMonitoringRadioButton)
                 .addContainerGap(377, Short.MAX_VALUE))
         );
 
@@ -858,6 +859,7 @@ public class MainForm extends javax.swing.JFrame {
         setting.setSmsTestSingTelPhoneNumber(singtelNumber.getText().trim());
         setting.setSmsTestSingTelSenderName(singtelSenderName.getText().trim());
         setting.setSmsTestSingTelTestMessage(singtelTestMessage.getText().trim());
+        setting.setMonitoringType(javaMonitoringRadioButton.isSelected() ? "Java" : "VB");
         settingsController.saveSettings(setting);
     }//GEN-LAST:event_saveSettingsButtonActionPerformed
 
@@ -1159,8 +1161,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
@@ -1168,6 +1168,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JTabbedPane jTabbedPane2;
+    private javax.swing.JRadioButton javaMonitoringRadioButton;
     private javax.swing.JTextField macTextField;
     private javax.swing.JTextField mailServerHost;
     private javax.swing.JFormattedTextField mailServerPortTextField;
@@ -1196,6 +1197,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JToggleButton starhubTestSend;
     private javax.swing.JTextField userNameTextField;
     private javax.swing.JTextField userTextField;
+    private javax.swing.JRadioButton vbMonitoringRadioButton;
     // End of variables declaration//GEN-END:variables
 
     private void loadContactTableInfo() {
@@ -1247,6 +1249,12 @@ public class MainForm extends javax.swing.JFrame {
         singtelSenderName.setText(setting.getSmsTestSingTelSenderName() == null ? "" : setting.getSmsTestSingTelSenderName());
         singtelNumber.setText(setting.getSmsTestSingTelPhoneNumber() == null ? "" : setting.getSmsTestSingTelPhoneNumber());
         singtelTestMessage.setText(setting.getSmsTestSingTelTestMessage() == null ? "" : setting.getSmsTestSingTelTestMessage());
+
+        if (setting.getMonitoringType().trim().equalsIgnoreCase("Java")) {
+            javaMonitoringRadioButton.setSelected(true);
+        } else {
+            vbMonitoringRadioButton.setSelected(true);
+        }
 
         initEmailSettingsList();
     }

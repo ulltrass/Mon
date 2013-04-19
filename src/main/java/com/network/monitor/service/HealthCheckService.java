@@ -126,6 +126,18 @@ public class HealthCheckService {
         }
     }
 
+    public void notifyServerDownEvent(List<Server> servers) {
+        List<EventLog> events = new ArrayList<EventLog>();
+        for (Server server : servers) {
+            EventLog eventLog = createEventLog(EventType.CRITICAL, "Server is down or is starting",
+                    server.getServerInfo().getGeneralInfo().getComputerName());
+            events.add(eventLog);
+            addLogToForm(eventLog);
+        }
+
+        notifyEvents(events);
+    }
+
     private void addLogToForm(EventLog eventLog) {
         mainForm.addEvent(eventLog.getEventTime().toString(), eventLog.getServerName(), eventLog.getMessage(),
                 eventLog.getEventType().getMessage(), "Email&SMS");
