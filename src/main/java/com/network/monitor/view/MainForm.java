@@ -147,7 +147,7 @@ public class MainForm extends javax.swing.JFrame {
         configNameTextField = new javax.swing.JTextField();
         enabledCheckBox = new javax.swing.JCheckBox();
         mailServerPortTextField = new javax.swing.JFormattedTextField();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        defaultCheckBox = new javax.swing.JCheckBox();
         cancelButton = new javax.swing.JButton();
         editButton = new javax.swing.JButton();
         moveUpButton = new javax.swing.JButton();
@@ -605,8 +605,8 @@ public class MainForm extends javax.swing.JFrame {
         mailServerPortTextField.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0"))));
         mailServerPortTextField.setEnabled(false);
 
-        jCheckBox1.setText("Default");
-        jCheckBox1.setEnabled(false);
+        defaultCheckBox.setText("Default");
+        defaultCheckBox.setEnabled(false);
 
         cancelButton.setText("Cancel");
         cancelButton.setEnabled(false);
@@ -663,7 +663,7 @@ public class MainForm extends javax.swing.JFrame {
                                 .addComponent(moveDownButton)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCheckBox1, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(defaultCheckBox, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(jLabel6)
                                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -722,7 +722,7 @@ public class MainForm extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(enabledCheckBox)
-                            .addComponent(jCheckBox1))
+                            .addComponent(defaultCheckBox))
                         .addGap(46, 46, 46)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(saveMailButton)
@@ -736,7 +736,7 @@ public class MainForm extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jCheckBox1.getAccessibleContext().setAccessibleName("defaultEmailCheckBox");
+        defaultCheckBox.getAccessibleContext().setAccessibleName("defaultEmailCheckBox");
 
         jTabbedPane2.addTab("Email", jPanel6);
 
@@ -824,9 +824,8 @@ public class MainForm extends javax.swing.JFrame {
                 Contact contact = new Contact(contactName, contactEmail, contactSMS);
                 contacts.add(contact);
             }
-            checkDuplicates(contacts);
-
         }
+        checkDuplicates(contacts);
         contactController.saveContacts(contacts);
     }//GEN-LAST:event_saveContactsButtonActionPerformed
 
@@ -941,9 +940,9 @@ public class MainForm extends javax.swing.JFrame {
             emailSettings.setUserName(userTextField.getText().trim());
             emailSettings.setPassword(new String(emailPasswordField.getPassword()));
             emailSettings.setEnabled(enabledCheckBox.isSelected());
-            emailSettings.setDefaultEmail(false);
+            emailSettings.setDefaultEmail(defaultCheckBox.isSelected());
 
-            if (jCheckBox1.isSelected()) {
+            if (defaultCheckBox.isSelected()) {
                 boolean found = false;
                 for (EmailSettings emailSetting : setting.getEmailSettings()) {
                     if (emailSetting.isDefaultEmail()) {
@@ -952,7 +951,7 @@ public class MainForm extends javax.swing.JFrame {
                                 emailSetting.getConfigName(),
                                 JOptionPane.ERROR_MESSAGE);
                         found = true;
-                        jCheckBox1.setSelected(false);
+                        defaultCheckBox.setSelected(false);
                         break;
                     }
                 }
@@ -1115,6 +1114,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTable contactsTable;
     private javax.swing.JTextField cpuTextField;
     private javax.swing.JButton createMailButton;
+    private javax.swing.JCheckBox defaultCheckBox;
     private javax.swing.JButton deleteMailButton;
     private javax.swing.JTextField domainNameTextField;
     private javax.swing.JTextField dvdTextField;
@@ -1125,7 +1125,6 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox enabledCheckBox;
     private javax.swing.JTable eventsTable;
     private javax.swing.JTextField ipv4TextField;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1319,6 +1318,8 @@ public class MainForm extends javax.swing.JFrame {
                 mailServerPortTextField.setText(emailSettings.getServerPort().trim());
                 userTextField.setText(emailSettings.getUserName());
                 emailPasswordField.setText(emailSettings.getPassword());
+                enabledCheckBox.setSelected(emailSettings.isEnabled());
+                defaultCheckBox.setSelected(emailSettings.isDefaultEmail());
                 deleteMailButton.setEnabled(true);
                 editButton.setEnabled(true);
                 if (emailSettingsListModel.size() > 1) {
@@ -1344,7 +1345,7 @@ public class MainForm extends javax.swing.JFrame {
         enabledCheckBox.setEnabled(enabled);
         saveMailButton.setEnabled(enabled);
         cancelButton.setEnabled(enabled);
-        jCheckBox1.setEnabled(enabled);
+        defaultCheckBox.setEnabled(enabled);
         createMailButton.setEnabled(!enabled);
         deleteMailButton.setEnabled(!enabled);
         editButton.setEnabled(!enabled);
@@ -1360,7 +1361,7 @@ public class MainForm extends javax.swing.JFrame {
         enabledCheckBox.setEnabled(true);
         saveMailButton.setEnabled(true);
         cancelButton.setEnabled(true);
-        jCheckBox1.setEnabled(true);
+        defaultCheckBox.setEnabled(true);
         createMailButton.setEnabled(false);
         deleteMailButton.setEnabled(false);
         editButton.setEnabled(false);
@@ -1402,16 +1403,39 @@ public class MainForm extends javax.swing.JFrame {
     }
 
     private void checkDuplicates(List<Contact> contacts) {
+        String message = "Duplicated emails: ";
+        String duplicateEmails = "";
+        String smsMessage = "Duplicated phone numbers: ";
+        String duplicateSMS = "";
+        boolean foundEmailDuplicates = false;
+        boolean foundSMSDuplicates = false;
         for (int i = 0; i < contacts.size(); i++) {
             for (int j = i + 1; j < contacts.size(); j++) {
                 Contact firstContact = contacts.get(i);
                 Contact secondContact = contacts.get(j);
                 if (firstContact.getEmail().trim().equals(secondContact.getEmail().trim())) {
-                    DefaultTableModel tableModel = (DefaultTableModel) contactsTable.getModel();
-
+                    duplicateEmails = firstContact.getEmail().trim() + ";";
+                    foundEmailDuplicates = true;
                 }
-
+                if (firstContact.getEmail().trim().equals(secondContact.getEmail().trim())) {
+                    duplicateSMS = firstContact.getEmail().trim() + ";";
+                    foundSMSDuplicates = true;
+                }
             }
         }
+
+        if (foundEmailDuplicates) {
+            JOptionPane.showMessageDialog(new JFrame(),
+                    message + duplicateEmails,
+                    "Email save warning",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+        if (foundSMSDuplicates) {
+            JOptionPane.showMessageDialog(new JFrame(),
+                    smsMessage + duplicateSMS,
+                    "Sms save warning",
+                    JOptionPane.WARNING_MESSAGE);
+        }
+
     }
 }

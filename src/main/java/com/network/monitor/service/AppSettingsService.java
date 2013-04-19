@@ -107,13 +107,8 @@ public class AppSettingsService {
 
     public void updateEmailPriority(EmailSettings emailSettings, EmailSettings emailSettings1, Integer newPriority, Integer newExchangePriority) {
         List<File> fileList = FileUtil.getFilesFromPathThatStartWith(SETTINGS_PATH, EMAIL_SETTINGS_FILE);
-
-//        String currentPath = emailSettings.getPriorityId() + "-" + emailSettings.getConfigName();
         String currentPathRenamed = newPriority + "-" + emailSettings.getConfigName();
-//        String exchangePath = emailSettings1.getPriorityId() + "-" + emailSettings1.getConfigName();
         String exchangePathRenamed = newExchangePriority + "-" + emailSettings1.getConfigName();
-
-//        FileUtil.updateNameForConfigFile(SETTINGS_PATH, currentPath, exchangePathRenamed);
         updateEmailSettings(emailSettings, currentPathRenamed);
         updateEmailSettings(emailSettings1, exchangePathRenamed);
 
@@ -182,6 +177,12 @@ public class AppSettingsService {
                 }
                 if (line.startsWith(EMAIL_PRIORITY)) {
                     emailSetting.setPriorityId(Integer.parseInt(line.split("=")[1]));
+                }
+                if (line.startsWith(EMAIL_DEFAULT)){
+                    emailSetting.setDefaultEmail(Boolean.parseBoolean(line.split("=")[1]));
+                }
+                 if (line.startsWith(EMAIL_ENABLED)){
+                    emailSetting.setEnabled(Boolean.parseBoolean(line.split("=")[1]));
                 }
             }
             emailSettings.add(emailSetting);
