@@ -949,12 +949,14 @@ public class MainForm extends javax.swing.JFrame {
                 for (EmailSettings emailSetting : setting.getEmailSettings()) {
                     if (emailSetting.isDefaultEmail()) {
                         JOptionPane.showMessageDialog(new JFrame(),
-                                "There is already a default email set",
+                                "There is already a default email set. "
+                                + "This will override the previous default.",
                                 emailSetting.getConfigName(),
                                 JOptionPane.ERROR_MESSAGE);
                         found = true;
                         defaultCheckBox.setSelected(false);
                         break;
+//                        emailSetting.setDefaultEmail(false);
                     }
                 }
                 if (!found) {
@@ -975,7 +977,6 @@ public class MainForm extends javax.swing.JFrame {
             changeEmailSettingsFormStatus(false);
         }
         editButton.setEnabled(false);
-
 
     }//GEN-LAST:event_saveMailButtonActionPerformed
 

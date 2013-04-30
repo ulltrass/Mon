@@ -1,5 +1,6 @@
 package com.network.monitor.service;
 
+import com.network.monitor.controller.ContactController;
 import com.network.monitor.domain.Contact;
 import com.network.monitor.domain.Setting;
 import java.io.BufferedReader;
@@ -20,28 +21,32 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.apache.log4j.Logger;
 
 /**
  *
- * @author 
+ * @author
  */
 public class SMSNotificationService {
 
-    public void sendSMSToContacts(Setting setting, List<Contact> contacts,String message) {
+    private static final Logger LOGGER = Logger.getLogger(SMSNotificationService.class);
+
+    public void sendSMSToContacts(Setting setting, List<Contact> contacts, String message) {
 
         for (Contact contact : contacts) {
-            if (contact.getSmsNumber().startsWith("9")) {
+            try {
                 sendSMS(setting.getSmsUrlWebStar(), contact.getSmsNumber(), message, "JavaApp");
-            } else {
-                if (contact.getSmsNumber().startsWith("8")) {
+            } catch (Exception ex) {
+                try {
                     sendSingTelSMS(setting.getSmsUrlSingTel(), contact.getSmsNumber(), message);
+                } catch (Exception ex1) {
+                    LOGGER.error(ex1.getMessage(), ex1);
                 }
             }
         }
     }
 
-    public void sendStarhubTestSMS(Setting setting, String phoneNumber, String senderName, String testMessage) {
+    public void sendStarhubTestSMS(Setting setting, String phoneNumber, String senderName, String testMessage) throws Exception {
         if (senderName == null || senderName.equals("")) {
             senderName = "JavaApp";
         }
@@ -51,7 +56,7 @@ public class SMSNotificationService {
         sendSMS(setting.getSmsUrlWebStar(), phoneNumber, testMessage, senderName);
     }
 
-    public void sendSingtelTestSMS(Setting setting, String phoneNumber, String senderName, String testMessage) {
+    public void sendSingtelTestSMS(Setting setting, String phoneNumber, String senderName, String testMessage) throws Exception {
         if (senderName == null || senderName.equals("")) {
             senderName = "JavaApp";
         }
@@ -61,8 +66,13 @@ public class SMSNotificationService {
         sendSingTelSMS(setting.getSmsUrlSingTel(), phoneNumber, testMessage);
     }
 
-    public void sendSMS(String smsUrl, String smsNumber, String smsMessage, String senderName) {
+    public void sendSMS(String smsUrl, String smsNumber, String smsMessage, String senderName) throws MalformedURLException, IOException, Exception {
         try {
+
+            CookieManager manager = new CookieManager();
+            manager.setCookiePolicy(CookiePolicy.ACCEPT_ALL);
+            CookieHandler.setDefault(manager);
+            HttpCookie httpCookie = null;
 
             String content = "?method=createSession"
                     + "&isUTF="
@@ -82,33 +92,40 @@ public class SMSNotificationService {
             httpURLConnection.setRequestMethod("POST");
             httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
             httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
-            httpURLConnection.setConnectTimeout(10000);
+            httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.3) Gecko/20100401");
+
             httpURLConnection.connect();
+            httpURLConnection.getContent();
+            // get cookies from underlying
+            // CookieStore
+            CookieStore cookieJar = manager.getCookieStore();
+            List<HttpCookie> cookies =
+                    cookieJar.getCookies();
+            for (HttpCookie cookie : cookies) {
+                System.out.println("cookie: " + cookie.getName());
+                if (cookie.getName().contains("JSESSIONID")) {
+                    httpCookie = cookie;
+                }
+            }
+            System.out.println("Cookies: " + cookies.toString());
             System.out.println(httpURLConnection.getResponseCode());
 
-            InputStream is = httpURLConnection.getInputStream();
-            InputStreamReader isr = new InputStreamReader(is);
-            BufferedReader br = new BufferedReader(isr);
-
-            BufferedWriter bw = new BufferedWriter(new FileWriter("D:/response.html"));
-
-            String line = null;
-            while ((line = br.readLine()) != null) {
-                bw.write(line);
-                bw.newLine();
-            }
-
-            bw.close();
-            br.close();
+            String sessionId = getChatSession(httpCookie);
+            logoutFromChat(httpCookie, sessionId);
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ContactService.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         } catch (IOException ex) {
-            Logger.getLogger(ContactService.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
+        } catch (Exception ex) {
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         }
     }
 
-    public void sendSingTelSMS(String smsUrl, String smsNumber, String smsMessage) {
+    public void sendSingTelSMS(String smsUrl, String smsNumber, String smsMessage) throws Exception {
         try {
 
             HttpCookie httpCookie = login();
@@ -157,15 +174,21 @@ public class SMSNotificationService {
             }
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ContactService.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         } catch (IOException ex) {
-            Logger.getLogger(ContactService.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         } catch (URISyntaxException ex) {
-            Logger.getLogger(SMSNotificationService.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
+        } catch (Exception ex) {
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         }
     }
 
-    private HttpCookie login() {
+    private HttpCookie login() throws Exception {
         HttpCookie httpCookie = null;
 
         try {
@@ -208,16 +231,20 @@ public class SMSNotificationService {
             }
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ContactService.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         } catch (IOException ex) {
-            Logger.getLogger(ContactService.class.getName()).log(Level.SEVERE, null, ex);
-
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
+        } catch (Exception ex) {
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         }
         return httpCookie;
 
     }
 
-    private void logout(HttpCookie httpCookie) {
+    private void logout(HttpCookie httpCookie) throws Exception {
         try {
 
             String fullUrl = "https://sms.singtel.com/internetsms/closeSendWindowAction.do";
@@ -244,12 +271,17 @@ public class SMSNotificationService {
             }
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ContactService.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         } catch (IOException ex) {
-            Logger.getLogger(ContactService.class.getName()).log(Level.SEVERE, null, ex);
-
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         } catch (URISyntaxException ex) {
-            Logger.getLogger(SMSNotificationService.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
+        } catch (Exception ex) {
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         }
     }
 
@@ -261,7 +293,7 @@ public class SMSNotificationService {
         return xmlResponse.substring(iStartIndex, iEndIndex);
     }
 
-    private void sendMessage(HttpCookie httpCookie, String smsNumber, String senderId, String smsMessage) {
+    private void sendMessage(HttpCookie httpCookie, String smsNumber, String senderId, String smsMessage) throws Exception {
 
         try {
 
@@ -316,13 +348,135 @@ public class SMSNotificationService {
 
 
         } catch (MalformedURLException ex) {
-            Logger.getLogger(ContactService.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         } catch (IOException ex) {
-            Logger.getLogger(ContactService.class.getName()).log(Level.SEVERE, null, ex);
-
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         } catch (URISyntaxException ex) {
-            Logger.getLogger(SMSNotificationService.class.getName()).log(Level.SEVERE, null, ex);
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
+        } catch (Exception ex) {
+            LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         }
 
+    }
+
+    private String getChatSession(HttpCookie httpCookie) {
+        String sessionId = "";
+        try {
+
+            String fullUrl = "http://websms.starhub.com/websmsn/usr/chat.do";
+
+            CookieManager manager = new CookieManager();
+            CookieHandler.setDefault(manager);
+            CookieStore cookieJar = manager.getCookieStore();
+
+            URL url = new URL(fullUrl);
+            cookieJar.add(url.toURI(), httpCookie);
+
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
+            httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.3) Gecko/20100401");
+
+            httpURLConnection.connect();
+            LOGGER.info("Response code for chatDo: " + httpURLConnection.getResponseCode());
+
+            if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                InputStream is = httpURLConnection.getInputStream();
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader reader = new BufferedReader(isr);
+                String str;
+                StringBuffer buffer = new StringBuffer();
+                while ((str = reader.readLine()) != null) {
+                    if (str.startsWith("var activeMsgSessionId")) {
+                        String parts[] = str.split("=");
+                        sessionId = parts[1].trim();
+                        sessionId = sessionId.substring(sessionId.indexOf("\"") + 1, sessionId.lastIndexOf("\""));
+                    }
+                }
+                reader.close();
+
+                System.out.println("Session: id: " + sessionId);
+
+
+            } else {
+                InputStream is = httpURLConnection.getErrorStream();
+
+                //InputStreamReader isr = new InputStreamReader(is, "UTF-8");
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader reader = new BufferedReader(isr);
+                String str;
+                StringBuffer buffer = new StringBuffer();
+                while ((str = reader.readLine()) != null) {
+                    buffer.append(str);
+                }
+                reader.close();
+                System.out.println("Request: " + buffer.toString());
+            }
+
+
+        } catch (MalformedURLException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+        } catch (URISyntaxException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+        } catch (IOException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+        }
+        return sessionId;
+
+
+    }
+
+    private void logoutFromChat(HttpCookie httpCookie, String sessionId) {
+        try {
+
+            String fullUrl = "http://websms.starhub.com/websmsn/usr/deleteMsgSessionSubmit.do"
+                    + "?method=deleteSession&messageSessionId=" + sessionId.trim();
+
+            CookieManager manager = new CookieManager();
+            CookieHandler.setDefault(manager);
+            CookieStore cookieJar = manager.getCookieStore();
+
+            URL url = new URL(fullUrl);
+            cookieJar.add(url.toURI(), httpCookie);
+
+            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+            httpURLConnection.setRequestMethod("GET");
+            httpURLConnection.setRequestProperty("Connection", "Keep-Alive");
+            httpURLConnection.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+            httpURLConnection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.2.3) Gecko/20100401");
+
+            httpURLConnection.connect();
+            LOGGER.info("Response code for delete session: " + httpURLConnection.getResponseCode());
+
+            if (httpURLConnection.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                LOGGER.info("Session " + sessionId + " has been successfully closed");
+            } else {
+                InputStream is = httpURLConnection.getErrorStream();
+
+                //InputStreamReader isr = new InputStreamReader(is, "UTF-8");
+                InputStreamReader isr = new InputStreamReader(is);
+                BufferedReader reader = new BufferedReader(isr);
+                String str;
+                StringBuffer buffer = new StringBuffer();
+                while ((str = reader.readLine()) != null) {
+                    buffer.append(str);
+                }
+                reader.close();
+                System.out.println("Request: " + buffer.toString());
+            }
+
+
+        } catch (MalformedURLException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+        } catch (URISyntaxException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+        } catch (IOException ex) {
+            LOGGER.error(ex.getMessage(), ex);
+        }
     }
 }

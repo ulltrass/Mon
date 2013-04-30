@@ -19,15 +19,15 @@ import java.util.Set;
  *
  * @author
  */
-public class DiskMonitorService {
+public class SystemMonitorService {
 
     ScriptExecutorService scriptExecutorService = new ScriptExecutorService();
     CSVParser cSVParser = new CSVParser();
 
-    public DiskMonitorService() {
+    public SystemMonitorService() {
     }
 
-    public List<Server> getDiskUsageForAllServers() {
+    public List<Server> getSystemInfoForAllServers() {
         List<Server> servers = new ArrayList<Server>();
 
         File scriptForDiskUsage = ScriptFinder.getScriptFileForDiskUsage();

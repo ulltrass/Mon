@@ -9,7 +9,7 @@ import com.network.monitor.domain.EmailSettings;
 import com.network.monitor.domain.Server;
 import com.network.monitor.domain.Setting;
 import com.network.monitor.service.ContactService;
-import com.network.monitor.service.DiskMonitorService;
+import com.network.monitor.service.SystemMonitorService;
 import com.network.monitor.service.EmailNotificationService;
 import com.network.monitor.service.SMSNotificationService;
 import java.util.List;
@@ -25,7 +25,7 @@ public class ContactController {
     ContactService contactService = new ContactService();
     SMSNotificationService smsNotificationService = new SMSNotificationService();
     EmailNotificationService emailNotificationService = new EmailNotificationService();
-    DiskMonitorService diskMonitorService = new DiskMonitorService();
+    SystemMonitorService diskMonitorService = new SystemMonitorService();
 
     public void saveContacts(List<Contact> contacts) {
         contactService.saveContacts(contacts);
@@ -49,7 +49,7 @@ public class ContactController {
 
     public void sendEmailToContacts(List<EmailSettings> emailSettings, List<Contact> contacts,
             String subject, String message) {
-        List<Server> servers = diskMonitorService.getDiskUsageForAllServers();
+        List<Server> servers = diskMonitorService.getSystemInfoForAllServers();
         boolean success = false;
         for (EmailSettings emailSetting : emailSettings) {
             if (emailSetting.isDefaultEmail()) {

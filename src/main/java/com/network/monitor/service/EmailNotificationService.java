@@ -40,7 +40,7 @@ public class EmailNotificationService {
         for (Contact contact : contacts) {
             recipients = recipients + contact.getEmail() + ", ";
         }
-        recipients = recipients.substring(0, recipients.lastIndexOf(",") - 1);
+        recipients = recipients.substring(0, recipients.lastIndexOf(","));
 
         try {
 

@@ -18,8 +18,9 @@ public class App {
         mainForm.setVisible(true);
 
         ClientRegistrationService clientRegistrationService = new ClientRegistrationService(mainForm);
-
         Thread t = new Thread(clientRegistrationService);
         t.start();
+        
+        
     }
 }
