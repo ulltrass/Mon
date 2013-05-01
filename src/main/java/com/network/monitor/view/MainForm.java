@@ -1289,7 +1289,7 @@ public class MainForm extends javax.swing.JFrame {
                 osVersionTextField.setText(server.getServerInfo().getGeneralInfo().getOsVersion());
                 computerNameTextField.setText(server.getServerInfo().getGeneralInfo().getComputerName());
                 serialNoTextField.setText(server.getServerInfo().getGeneralInfo().getSerialNumber());
-                compModelTextField.setText(server.getServerInfo().getGeneralInfo().getComputerName());
+                compModelTextField.setText(server.getServerInfo().getGeneralInfo().getModel());
                 cpuTextField.setText(server.getServerInfo().getGeneralInfo().getCpu());
                 ramTextField.setText(server.getServerInfo().getGeneralInfo().getRamCapacity());
                 dvdTextField.setText(server.getServerInfo().getGeneralInfo().getDvdDrive());
