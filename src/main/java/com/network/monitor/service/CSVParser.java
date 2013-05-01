@@ -31,7 +31,14 @@ public class CSVParser {
                     Map<String, String> property = null;
 
                     if (line.split(",").length != 2) {
-                       
+                        if (line.split(",").length == 4 && line.contains("IPV6")) {
+                            property = new HashMap<String, String>();
+                            property.put(line.split(",")[0].trim(), line.split(",")[1].trim());
+                            driveInfo.add(property);
+                            property = new HashMap<String, String>();
+                            property.put(line.split(",")[2].trim(), line.split(",")[3].trim());
+                            driveInfo.add(property);
+                        }
                     } else {
                         property = new HashMap<String, String>();
                         property.put(line.split(",")[0].trim(), line.split(",")[1].trim());
@@ -41,7 +48,7 @@ public class CSVParser {
                     parsedFileAsList.add(driveInfo);
                     driveInfo = new ArrayList<Map<String, String>>();
                 }
-                
+
             }
 
         } catch (FileNotFoundException ex) {

@@ -141,6 +141,9 @@ public class SystemMonitorService {
                 if (property.containsKey("IPV4")) {
                     generalInfo.setIpv4Address(property.get("IPV4"));
                 }
+                 if (property.containsKey("IPV6")) {
+                    generalInfo.setIpv6Address(property.get("IPV6"));
+                }
                 if (property.containsKey("MAC Address")) {
                     generalInfo.setMacAddress(property.get("MAC Address"));
                 }

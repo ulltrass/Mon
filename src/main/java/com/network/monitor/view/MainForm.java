@@ -98,6 +98,8 @@ public class MainForm extends javax.swing.JFrame {
         ipv4TextField = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         macTextField = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        ipv6TextField = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         eventsTable = new javax.swing.JTable();
@@ -232,6 +234,10 @@ public class MainForm extends javax.swing.JFrame {
 
         macTextField.setEditable(false);
 
+        jLabel28.setText("IPV6");
+
+        ipv6TextField.setEditable(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -249,7 +255,7 @@ public class MainForm extends javax.swing.JFrame {
                             .addComponent(jLabel12)
                             .addComponent(jLabel13)
                             .addComponent(jLabel14))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(computerNameTextField, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                             .addComponent(serialNoTextField, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -267,12 +273,17 @@ public class MainForm extends javax.swing.JFrame {
                             .addComponent(jLabel20))
                         .addGap(22, 22, 22)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cpuTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 337, Short.MAX_VALUE)
+                            .addComponent(cpuTextField, javax.swing.GroupLayout.DEFAULT_SIZE, 340, Short.MAX_VALUE)
                             .addComponent(ramTextField)
                             .addComponent(dvdTextField)
                             .addComponent(compModelTextField)
-                            .addComponent(ipv4TextField)
-                            .addComponent(macTextField))))
+                            .addComponent(macTextField)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(ipv4TextField, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jLabel28)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(ipv6TextField)))))
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(19, 19, 19)
@@ -314,7 +325,9 @@ public class MainForm extends javax.swing.JFrame {
                             .addComponent(jLabel13)
                             .addComponent(computerNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel19)
-                            .addComponent(ipv4TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ipv4TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel28)
+                            .addComponent(ipv6TextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel14)
@@ -1128,6 +1141,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JCheckBox enabledCheckBox;
     private javax.swing.JTable eventsTable;
     private javax.swing.JTextField ipv4TextField;
+    private javax.swing.JTextField ipv6TextField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1148,6 +1162,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1294,6 +1309,7 @@ public class MainForm extends javax.swing.JFrame {
                 ramTextField.setText(server.getServerInfo().getGeneralInfo().getRamCapacity());
                 dvdTextField.setText(server.getServerInfo().getGeneralInfo().getDvdDrive());
                 ipv4TextField.setText(server.getServerInfo().getGeneralInfo().getIpv4Address());
+                ipv6TextField.setText(server.getServerInfo().getGeneralInfo().getIpv6Address());
                 macTextField.setText(server.getServerInfo().getGeneralInfo().getMacAddress());
 
             }

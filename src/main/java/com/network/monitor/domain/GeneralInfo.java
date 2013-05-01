@@ -21,6 +21,7 @@ public class GeneralInfo implements Serializable{
     String ramCapacity;
     String dvdDrive;
     String ipv4Address;
+    String ipv6Address;
     String macAddress;
 
     public String getUserName() {
@@ -117,6 +118,14 @@ public class GeneralInfo implements Serializable{
 
     public void setMacAddress(String macAddress) {
         this.macAddress = macAddress;
+    }
+
+    public String getIpv6Address() {
+        return ipv6Address;
+    }
+
+    public void setIpv6Address(String ipv6Address) {
+        this.ipv6Address = ipv6Address;
     }
     
     
