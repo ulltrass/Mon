@@ -43,7 +43,7 @@ class MonitoringInfoServer implements Runnable {
                 Socket s = socket.accept();
                 InputStream is = s.getInputStream();
                 ObjectInputStream ois = new ObjectInputStream(is);
-                Server server = (Server) ois.readObject();;
+                Server server = (Server) ois.readObject();
 
                 LOGGER.info("Received info from Server: " + server.getServerInfo().getGeneralInfo().getComputerName());
 

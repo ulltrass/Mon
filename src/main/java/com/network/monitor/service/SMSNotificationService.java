@@ -362,7 +362,7 @@ public class SMSNotificationService {
 
     }
 
-    private String getChatSession(HttpCookie httpCookie) {
+    private String getChatSession(HttpCookie httpCookie) throws MalformedURLException, URISyntaxException, IOException {
         String sessionId = "";
         try {
 
@@ -425,10 +425,13 @@ public class SMSNotificationService {
 
         } catch (MalformedURLException ex) {
             LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         } catch (URISyntaxException ex) {
             LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         } catch (IOException ex) {
             LOGGER.error(ex.getMessage(), ex);
+            throw ex;
         }
         return sessionId;
 
