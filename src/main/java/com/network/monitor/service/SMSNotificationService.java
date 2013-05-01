@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.PrintWriter;
 import java.net.CookieHandler;
 import java.net.CookieManager;
 import java.net.CookiePolicy;
@@ -78,9 +79,7 @@ public class SMSNotificationService {
                     + "&isUTF="
                     + "&message=" + URLEncoder.encode(smsMessage)
                     + "&recipients=" + smsNumber
-                    + "&senderName=" + URLEncoder.encode(senderName)
-                    + "&x=25"
-                    + "&y=9";
+                    + "&senderName=" + URLEncoder.encode(senderName);
 
             String fullUrl = smsUrl + content;
 
@@ -108,7 +107,7 @@ public class SMSNotificationService {
                 }
             }
             System.out.println("Cookies: " + cookies.toString());
-            System.out.println(httpURLConnection.getResponseCode());
+            System.out.println("Init session: " + httpURLConnection.getResponseCode());
 
             String sessionId = getChatSession(httpCookie);
             logoutFromChat(httpCookie, sessionId);
@@ -391,7 +390,12 @@ public class SMSNotificationService {
                 BufferedReader reader = new BufferedReader(isr);
                 String str;
                 StringBuffer buffer = new StringBuffer();
+                
+                PrintWriter printWriter = new PrintWriter("D:/crazy.html");
+                
+                
                 while ((str = reader.readLine()) != null) {
+                    printWriter.println(str);
                     if (str.startsWith("var activeMsgSessionId")) {
                         String parts[] = str.split("=");
                         sessionId = parts[1].trim();
@@ -399,7 +403,7 @@ public class SMSNotificationService {
                     }
                 }
                 reader.close();
-
+                printWriter.close();
                 System.out.println("Session: id: " + sessionId);
 
 
