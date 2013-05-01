@@ -1426,8 +1426,8 @@ public class MainForm extends javax.swing.JFrame {
                     duplicateEmails = firstContact.getEmail().trim() + ";";
                     foundEmailDuplicates = true;
                 }
-                if (firstContact.getEmail().trim().equals(secondContact.getEmail().trim())) {
-                    duplicateSMS = firstContact.getEmail().trim() + ";";
+                if (firstContact.getSmsNumber().trim().equals(secondContact.getSmsNumber().trim())) {
+                    duplicateSMS = firstContact.getSmsNumber().trim() + ";";
                     foundSMSDuplicates = true;
                 }
             }
