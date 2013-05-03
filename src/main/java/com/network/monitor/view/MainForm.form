@@ -568,7 +568,7 @@
                                               <Component id="starhubTestMessage" pref="241" max="32767" attributes="0"/>
                                           </Group>
                                           <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="starhubTestSend" min="-2" pref="66" max="-2" attributes="0"/>
+                                          <Component id="starhubTestSend" min="-2" pref="65" max="-2" attributes="0"/>
                                       </Group>
                                       <Component id="smsUrlSingTelTextField" alignment="0" min="-2" pref="461" max="-2" attributes="0"/>
                                       <Group type="102" alignment="0" attributes="0">
@@ -671,14 +671,6 @@
                     </Component>
                     <Component class="javax.swing.JTextField" name="starhubNumber">
                     </Component>
-                    <Component class="javax.swing.JToggleButton" name="starhubTestSend">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Send"/>
-                      </Properties>
-                      <Events>
-                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="starhubTestSendActionPerformed"/>
-                      </Events>
-                    </Component>
                     <Component class="javax.swing.JLabel" name="jLabel24">
                       <Properties>
                         <Property name="text" type="java.lang.String" value="Sender Name"/>
@@ -714,6 +706,14 @@
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JTextField" name="singtelTestMessage">
+                    </Component>
+                    <Component class="javax.swing.JButton" name="starhubTestSend">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="Send"/>
+                      </Properties>
+                      <Events>
+                        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="starhubTestSendActionPerformed"/>
+                      </Events>
                     </Component>
                   </SubComponents>
                 </Container>

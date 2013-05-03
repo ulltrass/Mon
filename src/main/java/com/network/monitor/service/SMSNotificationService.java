@@ -38,6 +38,7 @@ public class SMSNotificationService {
             try {
                 sendSMS(setting.getSmsUrlWebStar(), contact.getSmsNumber(), message, "JavaApp");
             } catch (Exception ex) {
+                LOGGER.error("Unable to send sms with Starhub");
                 try {
                     sendSingTelSMS(setting.getSmsUrlSingTel(), contact.getSmsNumber(), message);
                 } catch (Exception ex1) {
@@ -110,6 +111,9 @@ public class SMSNotificationService {
             System.out.println("Init session: " + httpURLConnection.getResponseCode());
 
             String sessionId = getChatSession(httpCookie);
+            if (sessionId.equals("0")){
+                throw new Exception("Unable to create starhub session");
+            }
             logoutFromChat(httpCookie, sessionId);
 
         } catch (MalformedURLException ex) {

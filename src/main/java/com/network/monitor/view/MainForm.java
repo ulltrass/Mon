@@ -121,7 +121,6 @@ public class MainForm extends javax.swing.JFrame {
         starhubSenderName = new javax.swing.JTextField();
         jLabel23 = new javax.swing.JLabel();
         starhubNumber = new javax.swing.JTextField();
-        starhubTestSend = new javax.swing.JToggleButton();
         jLabel24 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         singtelSenderName = new javax.swing.JTextField();
@@ -131,6 +130,7 @@ public class MainForm extends javax.swing.JFrame {
         starhubTestMessage = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
         singtelTestMessage = new javax.swing.JTextField();
+        starhubTestSend = new javax.swing.JButton();
         jPanel6 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         userTextField = new javax.swing.JTextField();
@@ -463,13 +463,6 @@ public class MainForm extends javax.swing.JFrame {
 
         jLabel23.setText("Headphone Number");
 
-        starhubTestSend.setText("Send");
-        starhubTestSend.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                starhubTestSendActionPerformed(evt);
-            }
-        });
-
         jLabel24.setText("Sender Name");
 
         jLabel25.setText("Headphone Number");
@@ -484,6 +477,13 @@ public class MainForm extends javax.swing.JFrame {
         jLabel26.setText("Test Message");
 
         jLabel27.setText("Test Message");
+
+        starhubTestSend.setText("Send");
+        starhubTestSend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                starhubTestSendActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
         jPanel5.setLayout(jPanel5Layout);
@@ -507,7 +507,7 @@ public class MainForm extends javax.swing.JFrame {
                                 .addComponent(starhubNumber)
                                 .addComponent(starhubTestMessage, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE))
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(starhubTestSend, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(starhubTestSend, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addComponent(smsUrlSingTelTextField, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 461, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel5Layout.createSequentialGroup()
                             .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -867,7 +867,7 @@ public class MainForm extends javax.swing.JFrame {
         setting.setSmsUrlWebStar(smsTextField1.getText().trim());
         setting.setSmsUrlSingTel(smsUrlSingTelTextField.getText().trim());
         setting.setSmsTestWebStarPhoneNumber(starhubNumber.getText().trim());
-        setting.setSmsTestWebStarSenderName(starhubSenderName.getText().trim());
+        setting.setSmsTestWebStarSenderName(starhubSenderName.getText().trim().substring(0, 7));
         setting.setSmsTestWebStarTestMessage(starhubTestMessage.getText().trim());
         setting.setSmsTestSingTelPhoneNumber(singtelNumber.getText().trim());
         setting.setSmsTestSingTelSenderName(singtelSenderName.getText().trim());
@@ -1008,25 +1008,6 @@ public class MainForm extends javax.swing.JFrame {
         setting.getEmailSettings().remove(selectedIndex);
     }//GEN-LAST:event_deleteMailButtonActionPerformed
 
-    private void starhubTestSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_starhubTestSendActionPerformed
-        if (smsTextField1.getText() == null || "".equals(smsTextField1.getText())) {
-            JOptionPane.showMessageDialog(new JFrame(),
-                    "SMS URL is not set! \nPlease go to Settings",
-                    "SMS error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-        if (starhubNumber.getText() == null || "".equals(starhubNumber.getText())) {
-            JOptionPane.showMessageDialog(new JFrame(),
-                    "SMS Headphone Number is not set! \nPlease go to Settings",
-                    "SMS error",
-                    JOptionPane.ERROR_MESSAGE);
-        }
-
-        Setting setting = settingsController.getSettings();
-        testController.sendStarhubTestSMS(setting, starhubNumber.getText().trim(),
-                starhubSenderName.getText().trim(), starhubTestMessage.getText().trim());
-    }//GEN-LAST:event_starhubTestSendActionPerformed
-
     private void singtelTestSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_singtelTestSendActionPerformed
         if (smsUrlSingTelTextField.getText() == null || "".equals(smsUrlSingTelTextField.getText())) {
             JOptionPane.showMessageDialog(new JFrame(),
@@ -1086,6 +1067,25 @@ public class MainForm extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_moveDownButtonActionPerformed
+
+    private void starhubTestSendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_starhubTestSendActionPerformed
+        if (smsTextField1.getText() == null || "".equals(smsTextField1.getText())) {
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "SMS URL is not set! \nPlease go to Settings",
+                    "SMS error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        if (starhubNumber.getText() == null || "".equals(starhubNumber.getText())) {
+            JOptionPane.showMessageDialog(new JFrame(),
+                    "SMS Headphone Number is not set! \nPlease go to Settings",
+                    "SMS error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+
+        Setting setting = settingsController.getSettings();
+        testController.sendStarhubTestSMS(setting, starhubNumber.getText().trim(),
+                starhubSenderName.getText().trim(), starhubTestMessage.getText().trim());
+    }//GEN-LAST:event_starhubTestSendActionPerformed
 //
 //    /**
 //     * @param args the command line arguments
@@ -1210,7 +1210,7 @@ public class MainForm extends javax.swing.JFrame {
     private javax.swing.JTextField starhubNumber;
     private javax.swing.JTextField starhubSenderName;
     private javax.swing.JTextField starhubTestMessage;
-    private javax.swing.JToggleButton starhubTestSend;
+    private javax.swing.JButton starhubTestSend;
     private javax.swing.JTextField userNameTextField;
     private javax.swing.JTextField userTextField;
     private javax.swing.JRadioButton vbMonitoringRadioButton;
